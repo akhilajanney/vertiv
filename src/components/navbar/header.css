@@ -1,0 +1,9 @@
+.header{
+    min-width: 100%;
+    min-height: 55px;
+    box-shadow: 0 0 8px 2px grey;
+    position: fixed;
+    overflow: hidden;
+    z-index: 1;
+    background-color: #1b1b1b;
+}

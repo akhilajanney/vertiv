@@ -1,0 +1,66 @@
+h1{
+    text-transform: uppercase;
+}
+
+.inputdiv{
+    display: block;
+    padding: 5px 0;
+}
+
+.label {
+    font-size: 16px;
+    float: left;
+    width: 200px;
+    padding: 7px;
+  }
+
+  input[type=number], input[type=password], input[type=text],input[type=file], input[type=email],input[type=tel], select {
+    padding: 8px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 3px 3px 5px 3px rgb(0 0 0 / 25%);
+    border-radius: 4px;
+    width: 250px;
+    font-size: 15px;
+    background: #fff;
+    color: #000;
+}
+
+.row{
+    display: flex;
+}
+table {
+    border-collapse: collapse;
+    width: max-content;
+    width: 85%;
+
+    margin: 10px 0px;
+  }
+  th,
+  td {
+    padding: 5px 0px;
+    text-align: center;
+    font-family: Roboto-Regular;
+  }
+  th {
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  td {
+    font-size: 1.1vw;
+  }
+  tr:nth-child(even) {
+    background-color: #fe5b1b61;
+  }
+  tr th {
+    background-color: #FE5B1B;
+    color: white;
+  }
+  .table-border-bottom tr {
+    border-bottom: 1px solid #FE5B1B;
+  }
+
+  input::placeholder {
+    padding-left: 10px;
+  }

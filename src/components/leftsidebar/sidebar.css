@@ -1,0 +1,17 @@
+.sidebar{
+    position: fixed;
+   width: 200px;
+   height: 100%;
+   z-index: 1;
+   left: 0;
+   background: #1b1b1b;
+   overflow: hidden;
+}
+
+.sideLink{
+    /* margin-top: 60px; */
+    padding-left: 20px;
+    margin-bottom: 15px;
+    line-height: 50px;
+    /* background-color: white; */
+}
