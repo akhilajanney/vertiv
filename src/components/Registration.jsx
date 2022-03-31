@@ -4,8 +4,8 @@ import Sensorsreg from './Sensorsreg'
 import Systemreg from './Systemreg'
 import $ from 'jquery'
 const Navbtn = {
-    padding: "10px",
-    width:'30%',
+    width:'363px',
+    height:'40px',
     border: "none",
     borderRadius: "4px",
     fontSize: "16px",
@@ -26,7 +26,7 @@ export default class Registration extends Component {
         sidelinkClicked('option1')
         this.setState({ flag: true })
         this.List[0] = true;
-        $("#opt0").css({"background": "rgb(254, 91, 27)", "color": "white" });
+        $("#opt0").css({"background": "#fe5b1bb3", "color": "white" });
       }
 
       optionChange = (e) => {
@@ -35,10 +35,12 @@ export default class Registration extends Component {
         this.setState({ flag: true })
         this.List = [false, false]
         let id = parseInt(e.target.id.substring(3))
-        $("#" + e.target.id).css({ "background": "rgb(254, 91, 27)", "color": "white" });
+        $("#" + e.target.id).css({ "background": "#fe5b1bb3", "color": "white" });
         this.List[id] = true;
       }
+      
   render() {
+    const{message,success,error}=this.state;
     return (
         <>
       <div  
@@ -50,7 +52,7 @@ export default class Registration extends Component {
       }}
       >
           <h1>Registration</h1>
-      <div style={{width:'110px',height:'5px',background:'#FE5B1B',marginTop:'-20px',borderRadius:'3px'}}>
+      <div style={{width:'110px',height:'5px',background:'#fe5b1bb3',marginTop:'-20px',borderRadius:'3px'}}>
       </div>
 
       <div className="container fading"
@@ -79,9 +81,9 @@ export default class Registration extends Component {
                 className="container"
                 style={{
                   borderRadius: "0px 0px 5px 5px",
-                  border: "2px solid #FE5B1B",
+                  border: "2px solid #fe5b1bb3",
                   borderTop: "none",
-                  boxShadow: "0px 0px 5px 1px #FE5B1B",
+                  boxShadow: "0px 0px 5px 1px #fe5b1bb3",
                   width:'726px',
                 }}
                 id="childComponent"

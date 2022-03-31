@@ -1,90 +1,112 @@
-import React, { Component } from 'react'
-import { sidelinkClicked } from './leftsidebar/Leftsidebar'
+import React, {Component} from 'react'
+import {sidelinkClicked} from './leftsidebar/Leftsidebar'
 import $ from 'jquery'
 import axios from 'axios'
 
 
 export default class Health extends Component {
-    componentDidMount(){
+    constructor() {
+        super();
+        this.state = {
+            message: '',
+            success: false,
+            error: false
+        }
+    }
+    componentDidMount() {
         sidelinkClicked('option4')
-    //     axios({method:'GET',url:"/api/"})
-    // .then((response)=>{
-    //   if(response.status===200|| response.status===201 && response.length!=0){
-    //     let data=response.data;
-    //     console.log('assethealth',data);
-    //     $('#systemhealth').empty();
-    //     for(let i=0;i<data.length;i++){
+        this.systemHealth();
+        this.interval = setInterval(this.systemHealth, 15 * 1000);
 
-    //       let lastseen=data[i].lastseen .substr(0, 10) +
-    //     " " +
-    //     data[i].lastseen.substr(11, 8),
-
-    //     status='red';
-    //     if (new Date() - new Date(data[i].lastseen) <= 2 * 60 * 1000) {
-    //       status = "green";
-    //     }
-    //     $('#systemHealth').append(
-    //       "<tr><td>" +
-    //             (i + 1) +
-    //             "</td><td>" +
-    //              +
-    //             "</td><td>" +
-    //              +
-    //             "</td><td>" +
-    //             lastseen +
-    //             "</td><td>" +
-    //             "<div class='circle' style='margin:auto;background-color:" +
-    //             status +
-    //             ";'></div></td></tr>"
-
-    //     );
-    //   }
-    //   }
-    // })
-    // .catch((error)=>{
-    //   console.log(error)
-    //   if(error.status===404){
-    //     this.setState({error:true,message:'not found'})
-    //   }else if(error.status===400){
-    //     this.setState({error:true,message:'Bad request'})}
-    //  })
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    componentDidUpdate(){
+        setTimeout(() => this.setState({message:''}), 3000);
       }
-      
-      
-  
 
-     
-  render() {
-    return (
-      <div
-      style={{
-        float: "right", width: "90%",
-        marginTop: '94px',
-        marginBottom: "30px",
-        marginRight:'-116px'
-      }}
-      >
-          <h1>system Health</h1>
-          <div style={{width:'95px',height:'5px',background:'#FE5B1B',marginTop:'-20px',borderRadius:'3px'}}>
-              </div>
+    systemHealth = () => {
+        axios({method: 'GET', url: '/api/sensor/temperature'}).then((response) => {
+            // console.log(response);
+            let data = response.data;
+            // let incrementslno=0;
+            let sno = 1;
+            $('#systemHealth').empty();
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < data[i].sensors.length; j++) {
+                    let datas = data[i].sensors[j];
+                    // console.log(datas);
 
-        
-              <table style={{ marginTop: "30px" }}>
-                <thead>
-                  <tr>
-                    <th>Sl.No</th>
-                    <th>SENSOR ID</th>
-                    <th>SYSTEM NAME</th>
-                    <th> Battery</th>
-                    <th>LAST SEEN</th>
-                    <th>status</th>
-                    
-                  </tr>
-                </thead>
-                <tbody id="systemHealth"></tbody>
-              </table>
+                    let timestamp = datas.lastseen.substr(0, 10) + " " + datas.lastseen.substr(11, 8),
+                        status = 'red';
+                    if (new Date() - new Date(datas.lastseen) <= 2 * 60 * 1000) {
+                        status = "green";
+                    }
+                    $('#systemHealth').append("<tr><td>" + (
+                      sno
+                    ) + "</td><td>" + datas.macid + "</td><td>" + data[i].systemname + "</td><td>" + datas.battery + "</td><td>" + timestamp + "</td><td>" + "<div class='circle' style='margin:auto;background-color:" + status + ";'></div></td></tr>");
+                    sno+=1;
 
-      </div>
-    )
-  }
+                  }
+            }
+
+
+        }).catch((error) => {
+          if(error.response.status===403){
+            this.setState({error:true,message:'Please Login Again'})
+          }else if(error.response.status===400){
+            this.setState({error:true,message:'Bad Request!'})
+          }
+        })
+    }
+
+
+    render() {
+        const {message, success, error} = this.state;
+        return (
+            <div style={
+                {
+                    float: "right",
+                    width: "90%",
+                    marginTop: '94px',
+                    marginBottom: "30px",
+                    marginRight: '-116px'
+                }
+            }>
+                <h1>system Health</h1>
+                <div style={
+                    {
+                        width: '95px',
+                        height: '5px',
+                        background: '#fe5b1bb3',
+                        marginTop: '-20px',
+                        borderRadius: '3px'
+                    }
+                }></div>
+
+                <p>{message}</p>
+
+
+                <table style={
+                    {marginTop: "30px"}
+                }>
+                    <thead>
+                        <tr>
+                            <th>Sl.No</th>
+                            <th>SENSOR ID</th>
+                            <th>SYSTEM NAME</th>
+                            <th>
+                                Battery</th>
+                            <th>LAST SEEN</th>
+                            <th>status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="systemHealth"></tbody>
+                </table>
+
+            </div>
+        )
+    }
 }

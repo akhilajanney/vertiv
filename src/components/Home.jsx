@@ -10,7 +10,7 @@ export default class Home extends Component {
       marginRight:'-116px'}}>
 
         <h1 style={{margin:'0px'}}>Dashboard</h1>
-        <div style={{width:'100px',height:'5px',background:'#FE5B1B',marginTop:'0px',borderRadius:'3px'}}>
+        <div style={{width:'100px',height:'5px',background:'#fe5b1bb3',marginTop:'0px',borderRadius:'3px'}}>
           </div>
 
         <div style={{display:'flex'}}>
@@ -33,7 +33,7 @@ export default class Home extends Component {
         <div style={{display:'flex'}}>
         <Link to='/alerts'>
           <div>
-            <img src="/images/alerts.svg" alt="" 
+            <img src="/images/Alerts.svg" alt="" 
              style={{width:'250px'}}
             />
           </div>

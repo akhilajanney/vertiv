@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import login from './login.css'
-// import '../commonstyle.css'
-// import axios from 'axios'
-// axios.defaults.xsrfHeaderName = "x-csrftoken";
-// axios.defaults.xsrfCookieName = "csrftoken";
-// axios.defaults.withCredentials = true;
+import '../styles.css'
+import axios from 'axios'
+axios.defaults.xsrfHeaderName = "x-csrftoken";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 
 export default class Login extends Component {
     constructor(){
@@ -14,50 +14,50 @@ export default class Login extends Component {
             password:'',
             message:"",
             error: false, 
+            success:false,
         }
     }
-    componentDidMount(){
-        // this.submit
+
+    submit=(e)=>{
+        e.preventDefault();
+          const {username, password } = this.state;
+         let data = { username: username, password: password }
+        axios({method:'POST',url:'/api/login',data:data})
+        .then((res)=>{
+            // console.log(res);
+            if (res.status === 200 ) {
+                // console.log('Response===>');
+
+                sessionStorage.setItem("login", "success");
+                this.props.parentCallback("success");
+            }
+        })
+        .catch((err)=>{
+            // console.log(err);
+            sessionStorage.setItem("login", "failed");
+            this.props.parentCallback("failed");
+                this.setState({error:true,message:'incorrect username/password'})
+                if(err.response.status===401){
+                    this.setState({err:true,message:'Incorrect Credentials'})
+                }
+        })
     }
-
-    // submit=(e)=>{
-    //     e.preventDefault();
-    //       console.log('loggedin');
-    //       const {  username, password } = this.state;
-    //      let data = { username: username, password: password }
-    //     axios({method:'POST',url:'/api/login',data:data})
-    //     .then((res)=>{
-    //         console.log(res);
-    //         if (res.status === 200 ) {
-    //             console.log('Response===>');
-    //             // localStorage.setItem("loggedin", "success");
-    //             // this.props.parentCallback("success");
-
-    //             sessionStorage.setItem("login", "success");
-    //             this.props.parentCallback("success");
-    //         }
-    //     })
-    //     .catch((err)=>{
-    //         console.log(err);
-    //         // localStorage.setItem("loggedin", "failed");
-    //         // this.props.parentCallback("failed");
-    //         sessionStorage.setItem("login", "failed");
-    //         this.props.parentCallback("failed");
-    //             this.setState({error:true,message:'incorrect username/password'})
-    //     })
-    // }
-    // handleChange=(e)=>{
-    //     this.setState({[e.target.name]:e.target.value})
+    handleChange=(e)=>{
+        this.setState({[e.target.name]:e.target.value})
       
 
-    // }
+    }
+    componentDidUpdate(){
+        setTimeout(() => this.setState({message:''}), 3000);
+      }
 
   render() {
-      const{username,password,message}=this.state;
+      const{username,password,message,error,success}=this.state;
     return (
         <>
-       <div style={{position:'relative',background:'red'}}>
-            <div className='main_body' style={{position:'absolute'}}>
+       <div style={{margin:'0px',background:'linear-gradient(to right, #ffc3b3, #999999)',position:'absolute',width:'-webkit-fill-available',height:'-webkit-fill-available'}} >
+            <div className='main_body' >
+            
                 <img
                  src="/images/logo.png" alt="logo" 
                  style={{
@@ -70,36 +70,35 @@ export default class Login extends Component {
                  style={{marginLeft:'94px',
                  fontSize:'19px',
                     color:'white',
-                    fontWeight:500,
+                    fontWeight:500, fontFamily: 'Poppins-Regular'
                     
                  }}>
                     Login to Dashboard</span><br />
 
                     <p 
-                         style={{marginLeft:'71px',
+                         style={{marginLeft:'50px',
                          fontSize:'14px',
                             color:'white',
-                            // margin:'0px'
+                            fontFamily: 'Poppins-Regular'
                          }}
                     >
                         Enter Username and Password Below
                     </p>
-                    {/* <p 
-                    style={{color:'white',marginTop:'20px'}}
-                    >hi</p> */}
-
-                 {/* <p
-                 style={{textAlign:'center',color:'red'}}
-                 
-                 >{message}</p> */}
+                            {error && (
+                    <div style={{ color: 'red', marginLeft:'85px'}}>
+                    <strong>{message}</strong>
+                    </div>
+                )}
+                    
                  <form 
-                //  onSubmit={this.submit}
+                 onSubmit={this.submit}
                  >
                      <label htmlFor=""
                      style={{
                         marginLeft: '35px',
                         color: '#FE5B1B',
-                        marginBottom: '10px'
+                        marginBottom: '10px',
+
                      }}
                         
                      >Username</label><br />
@@ -108,8 +107,8 @@ export default class Login extends Component {
                     name='username'
                     className='type_text'
                     placeholder='Username'
-                    // value={username}
-                    // onChange={this.handleChange}
+                    value={username}
+                    onChange={this.handleChange}
                     style={{padding:'0px',marginTop:'10px',marginBottom: '10px',width:'285px',height:'35px'}}
                         /> <br />
 
@@ -127,9 +126,9 @@ export default class Login extends Component {
                     name='password'
                     className='type_password'
                     placeholder='Password' 
-                    // onChange={this.handleChange}
+                    onChange={this.handleChange}
                     style={{padding:'0px',marginTop:'10px',width:'285px',height:'35px'}}
-                    // value={password} 
+                    value={password} 
                     /><br />
 
                  {/* <input 
@@ -150,7 +149,7 @@ export default class Login extends Component {
                  >LOGIN</button>
                  </form>
             </div>
-            </div>
+        </div>
         </>
     );
   }

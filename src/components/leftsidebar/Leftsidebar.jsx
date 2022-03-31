@@ -24,10 +24,10 @@ export default class Leftsidebar extends Component {
         <>
          <div className='sidebar'>
             {/* <Link to='/home'> */}
-         <img src="/vertivlogo.png" alt="logo" 
+         <img src="/images/logo.png" alt="logo" 
             style={{
                 width: '96%',
-                marginTop: '11px',
+                marginTop: '-5px',
                 marginLeft: '13px',
                 marginBottom:'30px',
                 cursor:'pointer'
@@ -46,7 +46,7 @@ export default class Leftsidebar extends Component {
                                                     fontSize: '20px',
                                                     marginRight: '10px',
                                                     marginTop: "2px",
-                                                    color:'#FE5B1B'
+                                                    color:'#fe5b1bb3'
                                                 }}>
                                             </i>
                                             <span style={{ fontSize: "17px",color:'white' }}>Home</span>
@@ -66,7 +66,7 @@ export default class Leftsidebar extends Component {
                                                     fontSize: '20px',
                                                     marginRight: '10px',
                                                     marginTop: "2px",
-                                                    color:'#FE5B1B'
+                                                    color:'#fe5b1bb3'
                                                 }}>
                                             </i>
                                             <span style={{ fontSize: "17px",color:'white' }}>Registartion</span>
@@ -86,7 +86,7 @@ export default class Leftsidebar extends Component {
                                                     fontSize: '20px',
                                                     marginRight: '10px',
                                                     marginTop: "2px",
-                                                    color:'#FE5B1B'
+                                                    color:'#fe5b1bb3'
                                                 }}>
                                             </i>
                                             <span style={{ fontSize: "17px",color:'white' }}>Realtime Tracking</span>
@@ -106,7 +106,7 @@ export default class Leftsidebar extends Component {
                                                     fontSize: '20px',
                                                     marginRight: '10px',
                                                     marginTop: "2px",
-                                                    color:'#FE5B1B'
+                                                    color:'#fe5b1bb3'
                                                 }}>
                                             </i>
                                             <span style={{ fontSize: "17px",color:'white' }}>Alerts</span>
@@ -126,7 +126,7 @@ export default class Leftsidebar extends Component {
                                                     fontSize: '20px',
                                                     marginRight: '10px',
                                                     marginTop: "2px",
-                                                    color:'#FE5B1B'
+                                                    color:'#fe5b1bb3'
                                                 }}>
                                             </i>
                                             <span style={{ fontSize: "17px",color:'white' }}>System Health</span>

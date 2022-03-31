@@ -2,23 +2,22 @@ import React, { Component } from 'react'
 import header from './header.css'
 
 export default class Navbar extends Component {
+  logout=()=>{
+
+    console.log('logout----');
+        sessionStorage.removeItem('login')
+            window.location.pathname='/login'
+}
   render() {
     return (
       <>
         <div className='header'>
-            {/* <img src="/vertivlogo.png" alt="logo" 
-            style={{
-                width: '10%',
-                marginTop: '16px',
-                marginLeft: '50px',
-                cursor:'pointer'
-               }}
-            /> */}
-            <div style={{float:'right'}}>
+            <div style={{float:'right'}} onClick={this.logout}>
             <i style={{    marginRight: '24px',
                            marginTop: '12px',
-                          color:'#FE5B1B',
-                          fontSize:'25px'
+                          color:'#fe5b1bb3',
+                          fontSize:'25px',
+                          cursor:'pointer'
                         }}
             className="fas fa-sign-out-alt"></i>
             </div>

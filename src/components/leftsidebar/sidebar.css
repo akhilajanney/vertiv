@@ -1,11 +1,12 @@
 .sidebar{
     position: fixed;
-   width: 200px;
+   width: 215px;
    height: 100%;
    z-index: 1;
    left: 0;
-   background: #1b1b1b;
+   background: #2e2e2e;
    overflow: hidden;
+   font-family: Poppins-Regular;
 }
 
 .sideLink{
@@ -13,5 +14,6 @@
     padding-left: 20px;
     margin-bottom: 15px;
     line-height: 50px;
+    font-family: Poppins-Regular;
     /* background-color: white; */
 }
