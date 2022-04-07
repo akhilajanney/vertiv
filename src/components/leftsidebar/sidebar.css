@@ -1,19 +1,40 @@
 .sidebar{
     position: fixed;
-   width: 215px;
+   width: 220px!important;
    height: 100%;
    z-index: 1;
    left: 0;
    background: #2e2e2e;
    overflow: hidden;
    font-family: Poppins-Regular;
+   font-size: 13px;
 }
 
 .sideLink{
-    /* margin-top: 60px; */
     padding-left: 20px;
     margin-bottom: 15px;
     line-height: 50px;
     font-family: Poppins-Regular;
-    /* background-color: white; */
 }
+/* @media screen and (min-width: 768px){
+    .sidebar{
+        width:200px !important
+    }
+    .sideLink{
+        padding-left: 17px;
+        line-height: 47px;
+    }
+}
+@media screen and (min-width: 1366px){
+    .sidebar{
+        position: fixed;
+       width: 220px!important;
+       height: 100%;
+       z-index: 1;
+       left: 0;
+       background: #2e2e2e;
+       overflow: hidden;
+       font-family: Poppins-Regular;
+       font-size: 13px;
+    }
+} */

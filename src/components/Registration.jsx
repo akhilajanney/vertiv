@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import { sidelinkClicked } from './leftsidebar/Leftsidebar'
+import styles from './styles.css'
 import Sensorsreg from './Sensorsreg'
 import Systemreg from './Systemreg'
 import $ from 'jquery'
-const Navbtn = {
-    width:'363px',
-    height:'40px',
-    border: "none",
-    borderRadius: "4px",
-    fontSize: "16px",
-    cursor: "pointer",
-    color: "Black",
-    fontWeight: "bold",
-    boxShadow: "3px 3px 5px 3px rgba(0, 0, 0, 0.25)",
-  };
+// const Navbtn = {
+//     width:'363px',
+//     height:'40px',
+//     border: "none",
+//     borderRadius: "4px",
+//     fontSize: "16px",
+//     cursor: "pointer",
+//     color: "Black",
+//     fontWeight: "bold",
+//     boxShadow: "3px 3px 5px 3px rgba(0, 0, 0, 0.25)",
+//   };
 export default class Registration extends Component {
     List = [false, false];
   constructor(props) {
@@ -44,12 +45,7 @@ export default class Registration extends Component {
     return (
         <>
       <div  
-      style={{
-        float: "right", width: "90%",
-        marginTop: '94px',
-        marginBottom: "30px",
-        marginRight:'-116px'
-      }}
+        className='maindiv'
       >
           <h1>Registration</h1>
       <div style={{width:'110px',height:'5px',background:'#fe5b1bb3',marginTop:'-20px',borderRadius:'3px'}}>
@@ -58,34 +54,30 @@ export default class Registration extends Component {
       <div className="container fading"
               style={{
                 marginTop: "30px",
+               
               }}>
               <div className="row"
                 onClick={this.optionChange}>
                 <button
                   id="opt0"
-                  className="col col-3 heading"
-                  style={Navbtn}
+                  // className="col col-3 heading"
+                  className='navbtn'
+                  // style={Navbtn}
                 >
                   System Registration
                 </button>
                 <button
                 
                   id="opt1"
-                  className="col col-3 heading"
-                  style={Navbtn}
+                  // className="col col-3 heading"
+                  className='navbtn'
+                  // style={Navbtn}
                 >
                   Sensors Registration
                 </button>
               </div>
               <div
                 className="container"
-                style={{
-                  borderRadius: "0px 0px 5px 5px",
-                  border: "2px solid #fe5b1bb3",
-                  borderTop: "none",
-                  boxShadow: "0px 0px 5px 1px #fe5b1bb3",
-                  width:'726px',
-                }}
                 id="childComponent"
               >
                 {this.List[0] && (< Systemreg/>)}

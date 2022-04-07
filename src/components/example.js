@@ -16,54 +16,72 @@ export default class Realtime extends Component {
             series: [],
             flag: false,
             options: {
-              chart: {
-                id: 'area-datetime',
-                type: 'area',
-                height: 350,
-                zoom: {
-                  autoScaleYaxis: true
-                }
-              },
-              stroke: {
-                width: 2,
-              },
-              dataLabels: {
-                enabled: false
-              },
-              markers: {
-                size: 0,
-                style: 'hollow',
-              },
-              xaxis: {
-                type: 'datetime',
-                tickAmount: 6,
-              },
-              yaxis: {
-                labels: {
-                  formatter: function (value) {
-                    return value.toFixed(2) + "°C";
-                  }
+                chart: {
+                    id: 'area-datetime',
+                    type: 'area',
+                    height: 450,
+                    foreColor: "#004d99", // labels colors
+                    curve: 'smooth',
+                    zoom: {
+                        autoScaleYaxis: true
+                    },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 1500,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 1500
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 1500
+                        }
+                    }
                 },
-              },
-              tooltip: {
-                x: {
-                  format: 'yyyy-mm-dd HH:mm:ss'
-                }
-              },
-              fill: {
-                type: 'gradient',
-                gradient: {
-                  shadeIntensity: 1,
-                  opacityFrom: 0.7,
-                  opacityTo: 0.9,
-                  stops: [0, 100]
-                }
-              },
-            },
+                stroke: {
+                    width: 2
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                markers: {
+                    size: 0,
+                    colors: ['#008FFB']
+                },
+                xaxis: {
+                    type: 'datetime',
+                    tickAmount: 1,
+                    labels: {
+                        datetimeUTC: false,
+                        categories: ''
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (value) {
+                            return value.toFixed(2) + "°C";
+                        }
+                    }
+                },
+                tooltip: {
+                    x: {
+                        format: 'yyyy-MM-dd HH:mm:ss'
+                    }
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.2,
+                        opacityTo: 0.9
+                    }
+                },
+                colors: ['#F44336']
+            }
         }
     }
     componentDidMount() {
-        console.log("-------------");
         sidelinkClicked('option2')
         this.realtimeData();
         this.setState({flag: true})
@@ -129,7 +147,6 @@ export default class Realtime extends Component {
                         senBGclr = "rgba(255,35,0,0.6)";
                     
 
-
                     let sen_div = document.createElement('div');
                     $(sen_div).attr("id", data[i].sensors[j].id);
                     $(sen_div).css({
@@ -143,6 +160,10 @@ export default class Realtime extends Component {
                         "background": senBGclr
                     });
                     $(sen_div).attr("title", "Sensor ID : " + data[i].sensors[j].macid + "\nTemperature : " + data[i].sensors[j].temperature);
+
+                    $(sys_div).on("click", () => {
+                        this.sensorGraph(data[i].sysid, data[i].systemname)
+                    })
                     $(sys_div).append(sen_div);
 
                     // att+=  $(sen_div).attr("title",
@@ -153,9 +174,7 @@ export default class Realtime extends Component {
                 }
                 // $(sys_div).attr("title", att);
 
-                $(sys_div).on("click", () => {
-                    this.sensorGraph(data[i].sysid,'daily',data[i].systemname)
-                })
+
                 $("#img_container").append(sys_div);
 
             }
@@ -171,67 +190,58 @@ export default class Realtime extends Component {
         })
     }
 
-    sensorGraph = (mac, name,sysname) => {
-        console.log(mac,name);
-      this.setState({message: "", error: false, success: false, pop_err_msg: false});
-      this.setState({series: []});
-      $('#popup').css('display', 'block');
-      $("#systemname").css({"font-weight": "bold", "margin": "20px", "margin-bottom": "0px"});
-      $("#systemname").text("System Name: " + sysname);
-      $("#sensorid").css({"font-weight": "bold", "margin": "20px", "margin-bottom": "0px"});
-      $("#sensorid").text("System ID : " + mac);
-      axios({
-          method: 'GET',
-          url: '/api/system/'+ name+ '?sysid=' + mac
-      }).then((response) => {
-          console.log("response====>", response);
-          let data = response.data;
-          if (data.length !== 0) {
-              let value1 = [],value2=[],value3=[]; 
-              for (let i = 0; i < data.length; i++) {
-                  for (let j = 0; j < data[i].sensors.length; j++) {
-                      let tempData = [];
-                      this.time = data[i].sensors[j].timestamp.substring(0, 19).replace("T", " ");
-                      var date = new Date(this.time);
-                      var milliseconds = date.getTime();
-                      tempData.push(milliseconds);
-                      tempData.push(data[i].sensors[j].temperature)
-                      if(i===0){
-                        value1.push(tempData);
-                      } else if(i===1){
-                        value2.push(tempData);
-                      } else if(i===3){
-                        value3.push(tempData);
-                      }
-                  }
-              }
-              this.setState({
-                  series: [
-                      {
-                          name: 'Temp',
-                          data: value1,
-                          // categories: this.time
-                      },
-                      {
-                        name: 'Humi',
-                        data: value2,
-                        // categories: this.time
-                    },
-                  ]
-              })
+    sensorGraph = (mac, name) => {
+        this.setState({message: "", error: false, success: false, pop_err_msg: false});
+        this.setState({series: []});
+        $('#popup').css('display', 'block');
+        $("#systemname").css({"font-weight": "bold", "margin": "20px", "margin-bottom": "0px"});
+        $("#systemname").text("System Name: " + name);
+        $("#sensorid").css({"font-weight": "bold", "margin": "20px", "margin-bottom": "0px"});
+        $("#sensorid").text("Sensor ID : " + mac);
+        $('#chart').remove();
+        console.log('===================================');
+        // axios({
+        //     method: 'GET',
+        //     url: '/api/system/daily?sysid=' + mac
+        // }).then((response) => {
+        //     console.log("response====>", response);
+        //     let data = response.data;
+        //     if (data.length !== 0) {
+        //         let value = []
+        //         for (let i = 0; i < data.length; i++) {
+        //             for (let j = 0; j < data[i].sensors.length; j++) {
+        //                 let tempData = [];
+        //                 this.time = data[i].sensors[j].timestamp.substring(0, 19).replace("T", " ");
+        //                 var date = new Date(this.time);
+        //                 var milliseconds = date.getTime();
+        //                 tempData.push(milliseconds);
+        //                 tempData.push(data[i].sensors[j].temperature)
+        //                 value.push(tempData);
+        //                 // console.log(tempData)
+        //             }
+        //         }
+        //         this.setState({
+        //             series: [
+        //                 {
+        //                     name: 'Temperature ',
+        //                     data: value,
+        //                     categories: this.time
+        //                 }
+        //             ]
+        //         })
 
-          } else {
-              this.setState({message: 'No daily data found for System.', pop_err_msg: true})
-          }
-      }).catch((error) => {
-          if (error.status === 403) {
-              this.setState({error: true, message: 'Please Login Again'})
-          } else if (error.response.status === 400) {
-              this.setState({error: true, message: 'Bad request!'})
-          } else {
-              this.setState({message: 'No daily data found for System.', pop_err_msg: true})
-          }
-      })
+        //     } else {
+        //         this.setState({message: 'No daily data found for System.', pop_err_msg: true})
+        //     }
+        // }).catch((error) => {
+        //     if (error.status === 403) {
+        //         this.setState({error: true, message: 'Please Login Again'})
+        //     } else if (error.response.status === 400) {
+        //         this.setState({error: true, message: 'Bad request!'})
+        //     } else {
+        //         this.setState({message: 'No daily data found for System.', pop_err_msg: true})
+        //     }
+        // })
     }
 
 
@@ -328,6 +338,7 @@ export default class Realtime extends Component {
                         className="far fa-times-circle"></i>
                 <span id='systemname'>System Name:</span>
                 <span id='sensorid'>System ID:</span><br/>
+
                 <div style={
                         {marginTop: '35px'}
                     }
@@ -335,21 +346,12 @@ export default class Realtime extends Component {
                     onClick={
                         this.optionChange
                 }>
-                    <button id='opt0' value='daily' className='graph_btn'
-                        onClick={()=>this.sensorGraph('1','daily')}
-                    >
-                      DAILY
-                    </button>
+                    {/* <button id='opt0' value='daily' className='graph_btn'
+                        onClick={this.sensorGraph}>DAILY</button>
 
-                    <button id='opt1' value='weekly' className='graph_btn'
-                     onClick={()=>this.sensorGraph('1','weekly')}
-                    >WEEKLY
-                    </button>
-                    <button id='opt2' value='monthly' className='graph_btn'
-                     onClick={()=>this.sensorGraph('1','monthly')}
-                    >MONTHLY
-                    </button>
-                </div>
+                    <button id='opt1' value='weekly' className='graph_btn'>WEEKLY</button>
+                    <button id='opt2' value='monthly' className='graph_btn'>MONTHLY</button> */} 
+                    </div>
                 {
                 pop_err_msg && (
                     <div style={

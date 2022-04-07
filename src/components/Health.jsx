@@ -23,12 +23,12 @@ export default class Health extends Component {
         clearInterval(this.interval);
     }
     componentDidUpdate(){
-        setTimeout(() => this.setState({message:''}), 3000);
+       setTimeout(() => this.setState({message:''}), 3000);
       }
 
     systemHealth = () => {
         axios({method: 'GET', url: '/api/sensor/temperature'}).then((response) => {
-            // console.log(response);
+            console.log(response);
             let data = response.data;
             // let incrementslno=0;
             let sno = 1;
@@ -63,17 +63,12 @@ export default class Health extends Component {
 
 
     render() {
+        console.log(this.state,'=======');
         const {message, success, error} = this.state;
         return (
-            <div style={
-                {
-                    float: "right",
-                    width: "90%",
-                    marginTop: '94px',
-                    marginBottom: "30px",
-                    marginRight: '-116px'
-                }
-            }>
+            <div 
+                className='maindiv'
+            >
                 <h1>system Health</h1>
                 <div style={
                     {

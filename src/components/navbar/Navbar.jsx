@@ -13,12 +13,7 @@ export default class Navbar extends Component {
       <>
         <div className='header'>
             <div style={{float:'right'}} onClick={this.logout}>
-            <i style={{    marginRight: '24px',
-                           marginTop: '12px',
-                          color:'#fe5b1bb3',
-                          fontSize:'25px',
-                          cursor:'pointer'
-                        }}
+            <i id='header_img' 
             className="fas fa-sign-out-alt"></i>
             </div>
         </div>

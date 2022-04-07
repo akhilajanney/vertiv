@@ -69,7 +69,7 @@ export default class Leftsidebar extends Component {
                                                     color:'#fe5b1bb3'
                                                 }}>
                                             </i>
-                                            <span style={{ fontSize: "17px",color:'white' }}>Registartion</span>
+                                            <span style={{ fontSize: "17px",color:'white' }}>Registration</span>
                                         </div>
                                     </span>
               </Link>
@@ -89,7 +89,7 @@ export default class Leftsidebar extends Component {
                                                     color:'#fe5b1bb3'
                                                 }}>
                                             </i>
-                                            <span style={{ fontSize: "17px",color:'white' }}>Realtime Tracking</span>
+                                            <span style={{ fontSize: "17px",color:'white' }}>Real-Time Tracking</span>
                                         </div>
                                     </span>
               </Link>

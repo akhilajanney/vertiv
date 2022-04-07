@@ -26,15 +26,11 @@ export default class Systemreg extends Component {
       reader.readAsDataURL(file);
    }
     registerSystem=()=>{
-      
+      if($('#systemname').val()!=='' && $('#systemid').val()!=='' &&$('#systemimg').val()!=='' ){
       let form_data = new FormData();  
       form_data.append("name", $('#systemname').val());
       form_data.append("image", this.state.image);
       form_data.append("sysid", $('#systemid').val());
-      
-      // for (let [key, value] of form_data) {
-      //   console.log('====='+`${key}: ${value}`)
-      // }
       axios({method:'POST',url:'/api/sysregistration',data: form_data,
       headers:{'contnet-type':'multipart/formdata'}
     })
@@ -53,6 +49,10 @@ export default class Systemreg extends Component {
         console.log(error);
       })
     }
+    else{
+      this.setState({error:true,message:'Required All Fields'})
+    }
+    }
     removeSystem=()=>{
       let data={
        sysid: $('#sysid').val()}
@@ -60,7 +60,7 @@ export default class Systemreg extends Component {
       axios({method:'DELETE',url:'/api/sysregistration',data:data})
       .then((response)=>{
         // console.log(response);
-        if(response.status===200|| response.status===201){
+        if(response.status===200 || response.status===201){
           this.setState({success: true, message1: 'System Removed Successfullyy'})
           $('#sysid').val('');
           $('#deletetag').hide();
@@ -122,7 +122,7 @@ export default class Systemreg extends Component {
             <div className="inputdiv">
               <span className="label">System ID :</span>
               <input
-                type="text"
+                type="number"
                 name="systemid"
                 id="systemid"
                 required="required"
@@ -140,11 +140,8 @@ export default class Systemreg extends Component {
               />
             </div>
 
-            < div style={{display:'flex',marginTop:'55px',marginLeft:'12px'}}>
-            <div style={{display:'flex',background:'white',
-               border:'1px solid #00000024',
-               boxShadow:'8px 4px 20px 0px rgb(128 128 128 / 20%)',
-               width:'172px',height:'35px',borderRadius:'10px',marginLeft:'70px'}}>
+            < div className='submit_div'>
+            <div className='remove'>
                <div
                 style={{marginLeft:'15px',marginTop:'5px',color:'#fe5b1b',cursor:'pointer',fontFamily:'Poppins-Regular'}}
                     onClick={this.hide}
@@ -156,8 +153,7 @@ export default class Systemreg extends Component {
              </div>
                </div>
 
-               <div style={{display:'flex',background:'#fe5b1bb3',width:'172px',marginLeft:'70px',
-               height:'35px',borderRadius:'10px'}}>
+               <div className='register'>
                <div
                 onClick={this.registerSystem}
                 style={{marginLeft:'15px',marginTop:'5px',color:'white',cursor:'pointer',fontFamily:'Poppins-Regular'}}
@@ -175,21 +171,18 @@ export default class Systemreg extends Component {
           </form>
 
           <form id="deletetag"
-            style={{marginBottom:'50px',display:'none'}}
+            style={{paddingBottom:'30px',display:'none'}}
           >
           <div className="inputdiv">
               <span className="label">System ID :</span>
               <input
-                type="text"
+                type="number"
                 name="sysid"
                 id="sysid"
                 required="required"
               />
             </div>
-            <div style={{display:'flex',cursor:'pointer',
-            border:'1px solid #00000024',
-            boxShadow:'8px 4px 20px 0px rgb(128 128 128 / 20%)',
-            background:'white',width:'172px',height:'35px',borderRadius:'10px',marginLeft:'262px',marginTop:'22px'}}>
+            <div className='delete'>
                <div onClick={this.removeSystem}
                 style={{marginLeft:'15px',marginTop:'5px',color:'#fe5b1b',fontFamily:'Poppins-Regular'}}
               >  Remove System

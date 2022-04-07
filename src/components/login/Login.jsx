@@ -55,7 +55,7 @@ export default class Login extends Component {
       const{username,password,message,error,success}=this.state;
     return (
         <>
-       <div style={{margin:'0px',background:'linear-gradient(to right, #ffc3b3, #999999)',position:'absolute',width:'-webkit-fill-available',height:'-webkit-fill-available'}} >
+       <div style={{margin:'0px',background:'linear-gradient(to right, #ffc3b3, #999999)',position:'absolute',width:'100%',height:'100%'}} >
             <div className='main_body' >
             
                 <img

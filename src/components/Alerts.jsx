@@ -17,13 +17,15 @@ export default class Alerts extends Component {
         sidelinkClicked('option3')
         this.alerts();
         this.interval = setInterval(this.alerts, 15 * 1000);
+        setTimeout(() => this.setState({message:''}), 3000);
       }
       componentWillUnmount() {
+       
         clearInterval(this.interval);
     }
-    componentDidUpdate(){
-      setTimeout(() => this.setState({message:''}), 3000);
-    }
+    // componentDidUpdate(){
+    //   setTimeout(() => this.setState({message:''}), 3000);
+    // }
 
       alerts=()=>{
         axios({method:'GET',url:'/api/alert'})
@@ -64,14 +66,10 @@ export default class Alerts extends Component {
       }
   render() {
     const{message,error,success}=this.state;
+    console.log(this.state,'========');
     return (
       <div
-      style={{
-        float: "right", width: "80%",
-        marginTop: '94px',
-        marginBottom: "30px",
-        // marginRight:'-116px'
-      }}
+      className='maindiv'
       >
           <h1>alerts</h1>
           <div style={{width:'60px',height:'5px',background:'#fe5b1bb3',marginTop:'-20px',borderRadius:'3px',marginBottom:'30px'}}>
